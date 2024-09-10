@@ -11,6 +11,7 @@ class RecintosZoo {
 
         try {
             const ehAnimalValido = this.verificaAnimal(animal);
+            const ehQuantidadeValida = this.verificaQuantidade(quantidade);
         }catch (erro){
             resultado.erro = erro.message;
             resultado.recintoViaveis = null;
@@ -29,6 +30,14 @@ class RecintosZoo {
         }
 
         throw new Error("Animal inválido");
+    }
+
+    verificaQuantidade(quantidade){
+        if (quantidade > 0){
+            return true;
+        }
+
+        throw new Error("Quantidade inválida");
     }
 
 }
