@@ -1,4 +1,7 @@
-import{recintos, animaisAceitos} from "./dados.js"
+import{recintos, animais} from "./dados.js"
+
+const animaisAceitos = [...animais];
+const recintosDoZoo = [...recintos];
 
 class RecintosZoo {
 
@@ -13,7 +16,7 @@ class RecintosZoo {
             const ehAnimalValido = this.verificaAnimal(animal);
             const ehQuantidadeValida = this.verificaQuantidade(quantidade);
             if(ehAnimalValido && ehQuantidadeValida){
-                resultado.recintosViaveis = this.encontraRecintosViaveis(animal, quantidade);
+                resultado.recintosViaveis = this.encontraRecintosViaveis(animal, quantidade, recintosDoZoo);
             }
         }catch (erro){
             resultado.erro = erro.message;
@@ -43,11 +46,11 @@ class RecintosZoo {
         throw new Error("Quantidade inválida");
     }
 
-    encontraRecintosViaveis(animal, quantidade){
+    encontraRecintosViaveis(animal, quantidade, recintosDoZoo){
         const dadosDoAnimal = animaisAceitos.find((animalAceito) => animalAceito.especie === animal);
         const ambientesFavoraveisDoAnimal = dadosDoAnimal.ambientesFavoraveis;
 
-        const recintosViaveis = recintos.filter((recinto) => {
+        const recintosViaveis = recintosDoZoo.filter((recinto) => {
 
             const biomaEhFavoravel = recinto.bioma.some((bioma) => ambientesFavoraveisDoAnimal.includes(bioma));
 
@@ -96,8 +99,15 @@ class RecintosZoo {
             }
         }
 
-        if (dadosDoAnimal.especie === "HIPOPOTAMO" && (recinto.animaisResidentes.length > 0 && !(recinto.bioma.includes("savana") && recinto.bioma.includes("rio")))){
-            return false
+        if (dadosDoAnimal.especie === "HIPOPOTAMO") {
+            
+            if (recinto.animaisResidentes.some((residente) => residente === "HIPOPOTAMO")) {
+                return true;
+            }
+            
+            if (recinto.animaisResidentes.length > 0 && !(recinto.bioma.includes("savana") && recinto.bioma.includes("rio"))) {
+                return false;
+            }
         }
 
         return true;

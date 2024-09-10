@@ -1,3 +1,4 @@
+import { recintos } from "./dados.js";
 import { RecintosZoo } from "./recintos-zoo.js";
 
 describe('Recintos do Zoologico', () => {
@@ -65,20 +66,31 @@ describe('Recintos do Zoologico', () => {
         expect(resultado.recintosViaveis.length).toBe(2);
     });
 
-    test('Deve retornar apenas o Recinto 4 para 2 hipopotamos', () => {
-
-        const resultado = new RecintosZoo().analisaRecintos('HIPOPOTAMO', 2);
-        expect(resultado.erro).toBeFalsy();
-        expect(resultado.recintosViaveis[0]).toBe('Recinto 4 (espaço livre: 0 total: 8)');
-        expect(resultado.recintosViaveis.length).toBe(1);
-    });
-
     test('Deve retornar apenas o Recinto 5 para 1 Leao', () => {
 
         const resultado = new RecintosZoo().analisaRecintos('LEAO', 1);
         expect(resultado.erro).toBeFalsy();
         expect(resultado.recintosViaveis[0]).toBe('Recinto 5 (espaço livre: 3 total: 9)');
         expect(resultado.recintosViaveis.length).toBe(1);
+    });
+
+    test('Deve encontrar recinto para 1 hipopotamo em um recinto com 1 hipopotamo residente', () => {
+        const recintosComHipopotamo = [
+            ...recintos,
+            {
+            nome: "Recinto 6",
+            bioma: ["savana", "rio"],
+            tamanho: 10,
+            tamanhoOcupado: 4,
+            animaisResidentes: ["HIPOPOTAMO"]
+            }
+        ]
+
+        const resultado = new RecintosZoo().encontraRecintosViaveis('HIPOPOTAMO', 1, recintosComHipopotamo);
+        expect(resultado[0]).toBe('Recinto 3 (espaço livre: 0 total: 7)');
+        expect(resultado[1]).toBe('Recinto 4 (espaço livre: 4 total: 8)');
+        expect(resultado[2]).toBe('Recinto 6 (espaço livre: 2 total: 10)');
+        expect(resultado.length).toBe(3);
     });
 
 });

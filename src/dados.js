@@ -36,7 +36,7 @@ export const recintos = [
     }
 ]
 
-export const animaisAceitos = [
+export const animais = [
     {
         especie: "LEAO",
         tamanho: 3,
