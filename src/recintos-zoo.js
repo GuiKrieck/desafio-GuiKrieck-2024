@@ -96,7 +96,7 @@ class RecintosZoo {
             }
         }
 
-        if (dadosDoAnimal.especie === "HIPOPOTAMO" && !(recinto.bioma.includes("savana") && recinto.bioma.includes("rio"))){
+        if (dadosDoAnimal.especie === "HIPOPOTAMO" && (recinto.animaisResidentes.length > 0 && !(recinto.bioma.includes("savana") && recinto.bioma.includes("rio")))){
             return false
         }
 

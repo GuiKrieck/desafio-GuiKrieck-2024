@@ -37,5 +37,48 @@ describe('Recintos do Zoologico', () => {
         expect(resultado.recintosViaveis.length).toBe(3);
     });
 
-});
+    //Um macaco não se sente confortável sem outro animal no recinto, portanto não deve retornar o Recinto 2 para 1 macaco
+    test('Deve encontrar recintos para 1 macaco', () => {
 
+        const resultado = new RecintosZoo().analisaRecintos('MACACO', 1);
+        expect(resultado.erro).toBeFalsy();
+        expect(resultado.recintosViaveis[0]).toBe('Recinto 1 (espaço livre: 6 total: 10)');
+        expect(resultado.recintosViaveis[1]).toBe('Recinto 3 (espaço livre: 3 total: 7)');
+        expect(resultado.recintosViaveis.length).toBe(2);
+    });
+
+    //embora tenha espaço para os leopardos nos recintos, as regras dizem que animais carnivoros só podem ficar com a própia especie
+    test('Não deve encontrar recintos viáveis para leopardos ', () => {
+
+        const resultado = new RecintosZoo().analisaRecintos('LEOPARDO', 1);
+        expect(resultado.erro).toBe("Não há recinto viável");
+        expect(resultado.recintosViaveis).toBeFalsy();
+    });
+
+    //Hipopótamo(s) só tolera(m) outras espécies estando num recinto com savana e rio
+    test('Deve encontrar recintos para 1 hipopotamo', () => {
+
+        const resultado = new RecintosZoo().analisaRecintos('HIPOPOTAMO', 1);
+        expect(resultado.erro).toBeFalsy();
+        expect(resultado.recintosViaveis[0]).toBe('Recinto 3 (espaço livre: 0 total: 7)');
+        expect(resultado.recintosViaveis[1]).toBe('Recinto 4 (espaço livre: 4 total: 8)');
+        expect(resultado.recintosViaveis.length).toBe(2);
+    });
+
+    test('Deve retornar apenas o Recinto 4 para 2 hipopotamos', () => {
+
+        const resultado = new RecintosZoo().analisaRecintos('HIPOPOTAMO', 2);
+        expect(resultado.erro).toBeFalsy();
+        expect(resultado.recintosViaveis[0]).toBe('Recinto 4 (espaço livre: 0 total: 8)');
+        expect(resultado.recintosViaveis.length).toBe(1);
+    });
+
+    test('Deve retornar apenas o Recinto 5 para 1 Leao', () => {
+
+        const resultado = new RecintosZoo().analisaRecintos('LEAO', 1);
+        expect(resultado.erro).toBeFalsy();
+        expect(resultado.recintosViaveis[0]).toBe('Recinto 5 (espaço livre: 3 total: 9)');
+        expect(resultado.recintosViaveis.length).toBe(1);
+    });
+
+});
