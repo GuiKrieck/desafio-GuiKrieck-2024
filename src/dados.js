@@ -1,34 +1,34 @@
 export const recintos = [
     {
-        name: "Recinto1",
+        nome: "Recinto 1",
         bioma: ["savana"],
         tamanho: 10,
         tamanhoOcupado: 3,
         animaisResidentes: ["MACACO", "MACACO", "MACACO"]
     },
     {
-        name: "Recinto2",
+        nome: "Recinto 2",
         bioma: ["floresta"],
         tamanho: 5,
         tamanhoOcupado: 0,
         animaisResidentes: []
     },
     {
-        name: "Recinto3",
+        nome: "Recinto 3",
         bioma: ["savana","rio"],
         tamanho: 7,
         tamanhoOcupado: 2,
         animaisResidentes: ["GAZELA"]
     },
     {
-        name: "Recinto4",
+        nome: "Recinto 4",
         bioma: ["rio"],
         tamanho: 8,
         tamanhoOcupado: 0,
         animaisResidentes: []
     },
     {
-        name: "Recinto5",
+        nome: "Recinto 5",
         bioma: ["savana"],
         tamanho: 9,
         tamanhoOcupado: 3,
