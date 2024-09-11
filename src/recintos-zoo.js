@@ -9,7 +9,7 @@ class RecintosZoo {
 
         let resultado = {
             erro: false,
-            recintoViaveis: null
+            recintosViaveis: null
         };
 
         try {
