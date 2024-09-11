@@ -110,6 +110,10 @@ class RecintosZoo {
             }
         }
 
+        if (recinto.animaisResidentes.includes("HIPOPOTAMO") && !(recinto.bioma.includes("savana") && recinto.bioma.includes("rio"))){
+            return false;
+        }
+
         return true;
     }
 

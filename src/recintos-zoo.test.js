@@ -79,7 +79,7 @@ describe('Recintos do Zoologico', () => {
             ...recintos,
             {
             nome: "Recinto 6",
-            bioma: ["savana", "rio"],
+            bioma: ["savana","rio"],
             tamanho: 10,
             tamanhoOcupado: 4,
             animaisResidentes: ["HIPOPOTAMO"]
@@ -90,6 +90,45 @@ describe('Recintos do Zoologico', () => {
         expect(resultado[0]).toBe('Recinto 3 (espaço livre: 0 total: 7)');
         expect(resultado[1]).toBe('Recinto 4 (espaço livre: 4 total: 8)');
         expect(resultado[2]).toBe('Recinto 6 (espaço livre: 2 total: 10)');
+        expect(resultado.length).toBe(3);
+    });
+
+    //não deve incluir a Gazela pois o hipopotamo residente no recinto ficaria desconfortável
+    test('Não deve retornar o recinto que ja tem um hipopotamo residente, caso tentassemos colocar outro animal de espécie diferente e o bioma não for savana e rio', () => {
+        const recintosComHipopotamo = [
+            ...recintos,
+            {
+            nome: "Recinto 6",
+            bioma: ["savana"],
+            tamanho: 10,
+            tamanhoOcupado: 4,
+            animaisResidentes: ["HIPOPOTAMO"]
+            }
+        ]
+        
+        const resultado = new RecintosZoo().encontraRecintosViaveis('GAZELA', 1, recintosComHipopotamo);
+        expect(resultado[0]).toBe('Recinto 1 (espaço livre: 4 total: 10)');
+        expect(resultado[1]).toBe('Recinto 3 (espaço livre: 3 total: 7)');;
+        expect(resultado.length).toBe(2);
+    });
+
+    //nesse caso como o bioma é savana e rio o hipopotamo residente não ficaria desconfortável
+    test('Deve retornar o recinto que ja tem um hipopotamo residente, caso tentassemos colocar outro animal de espécie diferente e o bioma for savana e rio', () => {
+        const recintosComHipopotamo = [
+            ...recintos,
+            {
+            nome: "Recinto 6",
+            bioma: ["savana", "rio"],
+            tamanho: 10,
+            tamanhoOcupado: 4,
+            animaisResidentes: ["HIPOPOTAMO"]
+            }
+        ]
+        
+        const resultado = new RecintosZoo().encontraRecintosViaveis('GAZELA', 1, recintosComHipopotamo);
+        expect(resultado[0]).toBe('Recinto 1 (espaço livre: 4 total: 10)');
+        expect(resultado[1]).toBe('Recinto 3 (espaço livre: 3 total: 7)');;
+        expect(resultado[2]).toBe('Recinto 6 (espaço livre: 3 total: 10)');
         expect(resultado.length).toBe(3);
     });
 
